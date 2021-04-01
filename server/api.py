@@ -22,7 +22,7 @@ def characters_all():
             'episode': row['episode']
         }
         characters.append(character)
-    return json.dumps(characters)
+    return json.dumps({'characters': characters})
 
 
 @bp.route('/character/<int:id>', methods=['GET'])
@@ -35,5 +35,5 @@ def get_all_characters():
 
 
 def get_character_by_id(char_id: int):
-    characters = get_characters()
+    characters = get_all_characters()
     return characters.loc[characters['id'] == char_id]

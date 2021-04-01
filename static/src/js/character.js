@@ -13,9 +13,23 @@ class Character extends React.Component {
 class Characters extends React.Component {
   constructor() {
     super();
+    this.state = {characters: []};
   }
+
+  componentDidMount() {
+    this.fetchCharacters();
+  }
+
+  fetchCharacters() {
+    const charactersURL = 'http://localhost:5000';
+    fetch(charactersURL)
+      .then(response => response.json())
+      .then(result => {this.setState({characters: result.characters})});
+  }
+
   render() {
-    return <Character />;
+    const {characters} = this.state;
+    return characters;
   }
 }
 
