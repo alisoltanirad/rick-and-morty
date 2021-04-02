@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 
 
 def create_app(test_config=None):
@@ -24,12 +25,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple hello world page
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
+    # api
     from . import api
     app.register_blueprint(api.bp)
+
+    # CORS
+    CORS(app)
 
     return app
