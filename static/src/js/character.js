@@ -27,9 +27,42 @@ class Characters extends React.Component {
       .then(result => {this.setState({characters: result.characters})});
   }
 
+  getCharacterCard(character) {
+    const card = <div class="card">
+      <div class="card-body">
+        <p>
+          Name: {character.name}<br/>
+          Status: {character.status}<br/>
+          Species: {character.species}<br/>
+          Gender: {character.gender}<br/>
+          Episode: {character.episode}
+        </p>
+      </div>
+    </div>;
+    return card;
+  }
+
+  getAllCharacterCards() {
+    const cardsDiv = <div>
+      {
+        this.state.characters.map(
+          (character, index) => {
+            return this.getCharacterCard(character);
+          }
+        )
+      }
+    </div>
+
+    return cardsDiv
+  }
+
   render() {
-    const {characters} = this.state;
-    return characters;
+    if (this.state.characters.length == 0) {
+      return '';
+    } else {
+      const characterCards = this.getAllCharacterCards();
+      return characterCards;
+    }
   }
 }
 
