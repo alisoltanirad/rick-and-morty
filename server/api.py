@@ -3,6 +3,7 @@ import json
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+import pandas as pd
 
 from server.data import Dataset
 
@@ -27,7 +28,18 @@ def characters_all():
 
 @bp.route('/character/<int:id>', methods=['GET'])
 def character_by_id(id: int):
-    return 'Character {id} Placeholder!'.format(id=id)
+    record = get_character_by_id(id)
+    try:
+        character = {
+            'name': record['name'],
+            'status': record['status'],
+            'species': record['species'],
+            'gender': record['gender'],
+            'episode': record['episode']
+        }
+    except:
+        character = []
+    return json.dumps(character)
 
 
 def get_all_characters():
@@ -36,4 +48,8 @@ def get_all_characters():
 
 def get_character_by_id(char_id: int):
     characters = get_all_characters()
-    return characters.loc[characters['id'] == char_id]
+    try:
+        character = characters.loc[characters['id'] == char_id].iloc[0, :]
+    except:
+        character = None
+    return character
