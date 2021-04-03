@@ -50,8 +50,7 @@ class Characters extends React.Component {
     if (this.state.characters.length == 0) {
       return '';
     } else {
-      const characterCards = this.getAllCharacterCards();
-      return characterCards;
+      return this.getAllCharacterCards();
     }
   }
 }

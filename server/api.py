@@ -38,7 +38,7 @@ def character_by_id(id: int):
             'episode': record['episode']
         }
     except:
-        character = []
+        character = ['']
     return json.dumps(character)
 
 
